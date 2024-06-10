@@ -1,4 +1,4 @@
-from .connection import get_db_connection
+from connection import get_db_connection
 
 def create_tables():
     conn = get_db_connection()
@@ -31,3 +31,5 @@ def create_tables():
 
     conn.commit()
     conn.close()
+
+create_tables()
