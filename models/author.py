@@ -59,9 +59,4 @@ class Author:
             Article.row_to_instance(row) for row in rows
         ]
     
-    def magazines(self):
-        from magazine import Magazine
-        sql = """
-            SELECT magazines.name, magazines.category FROM magazines
-            WHERE author_id = ?  
-        """
+    
