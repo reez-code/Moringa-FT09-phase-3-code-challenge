@@ -50,12 +50,18 @@ class Author:
     def articles(self):
         from article import Article
         sql = """
-            SELECT articles.title, authors.name FROM articles
-            INNER JOIN author.id = author_id
-            WHERE author.id = ?
+            SELECT articles.title, articles.content FROM articles
+            WHERE author_id = ?  
         """
         cursor.execute(sql, (self.id,)).fetchall()
         rows = cursor.fetchall()
         return [
             Article.row_to_instance(row) for row in rows
         ]
+    
+    def magazines(self):
+        from magazine import Magazine
+        sql = """
+            SELECT magazines.name, magazines.category FROM magazines
+            WHERE author_id = ?  
+        """

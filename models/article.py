@@ -8,9 +8,10 @@ class Article:
         self.author_id = author_id
         self.magazine_id = magazine_id
         self.add_to_database()
+        
 
     def __repr__(self):
-        return f'<Article {self.title}>'
+        return f'<Article {self.title}, {self.content}>'
     
     def add_to_database(self):
         sql = """

@@ -1,5 +1,6 @@
 from .__init__ import conn, cursor
 class Magazine:
+    all = {}
     def __init__(self, name, category, id=None):
         self.id = id
         self.name = name
@@ -17,6 +18,7 @@ class Magazine:
         cursor.execute(sql, (self.name, self.category))
         conn.commit()
         self.id = cursor.lastrowid
+        type(self).all[self.id] = self
  
     @property
     def name(self):
@@ -39,3 +41,16 @@ class Magazine:
             self._category = category
         else:
             raise ValueError("Category must be a non-empty string")
+        
+    @classmethod
+    def row_to_instance(cls, row):
+        magazine = cls.all.get(row[0])
+        if magazine:
+            magazine.name = row[1]
+            magazine.category = row[2]
+        else:
+            magazine = cls(row[1], row[2])
+            magazine.id = row[0]
+            cls.all[magazine.id] = magazine
+        
+        return magazine
