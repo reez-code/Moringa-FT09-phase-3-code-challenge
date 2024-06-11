@@ -1,6 +1,6 @@
 from .__init__ import conn, cursor
 class Magazine:
-    def __init__(self, id, name, category="sports"):
+    def __init__(self, name, category, id=None):
         self.id = id
         self.name = name
         self.category = category
@@ -11,23 +11,13 @@ class Magazine:
     
     def add_to_database(self):
         sql = """
-            INSERT INTO magazines (id, name, category)
-            VALUES (?, ?, ?)
+            INSERT INTO magazines (name, category)
+            VALUES (?, ?)
         """
-        cursor.execute(sql, (self.id, self.name, self.category))
+        cursor.execute(sql, (self.name, self.category))
         conn.commit()
-    
-    @property
-    def id(self):
-        self._id
-    
-    @id.setter
-    def id(self, id):
-        if isinstance(id, int):
-            self._id = id
-        else:
-            raise ValueError("Id must be an integer.")
-    
+        self.id = cursor.lastrowid
+ 
     @property
     def name(self):
         return self._name
